@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import useFetch from "./components/customComponents/customFetch/myFetch";
+import Filter from "./components/filterAndDate/filter";
 
 function App() {
+  const {data,loading,error}=useFetch('https://api.spacexdata.com/v5/launches')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-full h-screen bg-[#FFFFFF]">
+      <div className="flex justify-center items-center w-full sm:h-[5vw] h-[10vw] border-2 border-[#005288]">
+        <img
+          src="/images/Logo.svg"
+          alt="logo"
+          className="sm:w-[260px] sm:h-[32px] w-[120px] h-[20px] "
+        />
+      </div>
+      <Filter/>
     </div>
   );
 }
