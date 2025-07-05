@@ -1,9 +1,10 @@
-import useFetch from "./components/customComponents/customFetch/myFetch";
 import Filter from "./components/filterAndDate/filter";
+import Table1 from "./components/table";
+import { UserProvider } from "./context/filterContext";
 
 function App() {
-  const {data,loading,error}=useFetch('https://api.spacexdata.com/v5/launches')
   return (
+    <UserProvider>
     <div className="w-full h-screen bg-[#FFFFFF]">
       <div className="flex justify-center items-center w-full sm:h-[5vw] h-[10vw] border-2 border-[#005288]">
         <img
@@ -13,7 +14,9 @@ function App() {
         />
       </div>
       <Filter/>
+      <Table1/>
     </div>
+    </UserProvider>
   );
 }
 

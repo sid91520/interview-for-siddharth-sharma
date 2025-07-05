@@ -2,11 +2,19 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/filterContext";
 
 function Filter() {
+  const [launchType, setLaunchType] = useState('all');
+  const {setFilter}=useContext(UserContext)
+  const handleChange = (event) => {
+    setLaunchType(event.target.value);
+    setFilter(event.target.value)
+  };
   return (
-    <div className="flex justify-evenly items-center sm:w-[80%] w-full sm:px-0 px-5 sm:py-8 py-4 sm:m-auto">
-        {/* <div className="sm:w-[40%] w-[50%]  h-6 bg-green-400"></div> */}
+    <div className="flex justify-between items-center sm:w-[80%] w-full sm:px-0 px-5 sm:py-8 py-4 sm:m-auto">
+        <div className="sm:w-[40%] w-[50%]  h-6 bg-green-400"></div>
         <div className="sm:w-[40%] w-[50%] flex flex-row items-center justify-end">
           <div>
             <img
@@ -21,13 +29,14 @@ function Filter() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={""}
+                value={launchType}
                 label="Age"
-                onChange={""}
+                onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={'all'}>All Launches</MenuItem>
+                <MenuItem value={'upcoming'}>Upcoming Launches</MenuItem>
+                <MenuItem value={'successful'}>Successful Launches</MenuItem>
+                <MenuItem value={'failed'}>Failed Launches</MenuItem>
               </Select>
             </FormControl>
           </div>
