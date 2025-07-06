@@ -1,4 +1,4 @@
-import {useContext, useMemo } from "react";
+import {useContext, useMemo, useState } from "react";
 import useFetch from "./customComponents/customFetch/myFetch"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { UserContext } from "../context/filterContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import BasicModal from "./modal/modal";
 
-function createData(no, Launched, mission, orbit, launchStatus,rocket) {
-  return { no, Launched, mission, orbit, launchStatus,rocket };
+function createData(no, Launched,missionId, mission, orbit, launchStatus,rocket) {
+  return { no, Launched,missionId, mission, orbit, launchStatus,rocket };
 }
 function Table1() {
   const {data,loading,error}=useFetch('https://api.spacexdata.com/v5/launches')
@@ -28,24 +29,30 @@ function Table1() {
       return item.upcoming!==true && item.success!==true && item.tbd !==true
     }
   })
-  console.log(filteredData);
+  const [modal, setModal] = useState({ open: false, id: null });
   const row=useMemo(()=>{
     return filteredData.map((launch,idx)=>{
       const launchedDate=new Date(launch.date_local).toLocaleString()
       const mission  = launch.name ?? "—";
        const orbit ='LEO'
+       const missionId=launch.id
         const launchStatus = launch.upcoming
         ? "Upcoming"
         : launch.success
         ? "Success"
         : "Failure";
          const rocket = launch.rocket;
-         return createData(idx + 1, launchedDate, mission, orbit, launchStatus, rocket);
+         return createData(idx + 1, launchedDate, missionId, mission, orbit, launchStatus, rocket);
     })
   },[filteredData])
     if (loading) return <div className="h-[30%] w-full flex justify-center items-center"><CircularProgress color="success" /></div>;
   if (error)   return <p>Error: {error.message}</p>;
+
+   
+  const handleRowClick=(launchId)=>setModal({ open: true, id: launchId });
+
   return (    
+    <>
      <TableContainer component={Paper}>
       <Table sx={{ maxWidth: 750,margin:"auto"}} size="small" aria-label="a dense table">
         <TableHead>
@@ -62,6 +69,7 @@ function Table1() {
           {row.map((row) => (
             <TableRow
               key={row.no}
+              onClick={() => handleRowClick(row.missionId)}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -80,6 +88,13 @@ function Table1() {
         </TableBody>
       </Table>
     </TableContainer>
+    <BasicModal
+        myLaunchId={modal.id}
+        openStatus={modal.open}
+        onClose={() => setModal({ open: false, id: null })}
+        data={filteredData}
+      />
+  </>
   )
 }
 

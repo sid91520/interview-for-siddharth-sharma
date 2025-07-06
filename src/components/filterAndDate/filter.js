@@ -14,7 +14,7 @@ function Filter() {
   };
   return (
     <div className="flex justify-between items-center sm:w-[80%] w-full sm:px-0 px-5 sm:py-8 py-4 sm:m-auto">
-        <div className="sm:w-[40%] w-[50%]  h-6 bg-green-400"></div>
+        <div className="sm:w-[40%] w-[50%]  h-6 bg-[#ffffff]"></div>
         <div className="sm:w-[40%] w-[50%] flex flex-row items-center justify-end">
           <div>
             <img
