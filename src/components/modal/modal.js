@@ -12,8 +12,8 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  '@media (max-width: 600px)': { // Adjust for mobile screens
-    width: '90%', // Set width to 90% for screens smaller than 600px
+  '@media (max-width: 600px)': {
+    width: '90%',
   },
 };
 
@@ -26,7 +26,6 @@ export default function BasicModal({ myLaunchId, openStatus, onClose, data }) {
         : filterSingleProduct?.success
         ? "Success"
         : "Failure";
-  console.log(filterSingleProduct);
   return (
     <div>
       <Modal
